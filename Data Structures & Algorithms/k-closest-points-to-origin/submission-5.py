@@ -1,0 +1,15 @@
+import heapq
+class Solution:
+    def dist(self, x: int, y: int) -> int:
+        return x**2 + y**2
+
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        heap = [(-self.dist(x,y), x, y) for x,y in points[:k]]
+        heapq.heapify(heap)
+
+        for x, y in points[k:]:
+            d = -self.dist(x, y)
+            if d > heap[0][0]:
+                heapq.heapreplace(heap, (d, x, y))
+            
+        return [[x,y] for _,x,y in heap]
