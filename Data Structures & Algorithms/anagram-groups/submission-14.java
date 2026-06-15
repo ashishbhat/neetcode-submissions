@@ -1,0 +1,19 @@
+class Solution {
+    public String hash(String str){
+        int[] arr = new int[26];
+        for(int i = 0; i < str.length(); ++i){
+            arr[str.charAt(i) - 'a'] += 1;
+        }
+        return Arrays.stream(arr)
+            .mapToObj(String::valueOf)
+            .collect(Collectors.joining("#"));
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for(String str : strs){
+            String key = hash(str);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
+        }
+        return new ArrayList<>(map.values());
+    }
+}
